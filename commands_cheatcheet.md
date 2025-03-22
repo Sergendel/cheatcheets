@@ -14,6 +14,7 @@
 | `git status`                   | Check repository status                       | `git status`                                                         | 
 | `git push -u origin main`      | -u sets local branch to follow remote branch. |  Now Git remembers the relationship                                  |
 | `git push`                     | Sends local commits to the remote repo        | `git push`                                                           |
+| `git mv oldname.md newname.md` | Renames the file locally                      |                                                                      |
 | `git clone <repo>`             | Clone a repository                            | `git clone https://github.com/user/repo.git`                         |      
 | `git pull`                     | Pull changes from remote                      | `git pull origin main`                                               |
 | `git branch <name>`            | Create a new branch                           | `git branch feature1`                                                |
