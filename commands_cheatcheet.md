@@ -81,6 +81,8 @@ docker run -it lunar:v1
 | `docker stop <container_id>`                  | Stop container                              | `docker stop abc123`                     |
 | `docker rm <container_id>`                    | Remove container                            | `docker rm abc123`                       |
 | `docker rmi <image>`                          | Remove image                                | `docker rmi myapp:v1`                    |
+| `docker system df`                            | Overview  of Docker's disk usage            |                                          |
+| `docker system prune -a --volumes`            | reclaim disk space explicitly safely        | delete unused images, cont-s, netw-s, ...|
 
 ### **Volume Mounting**
 
