@@ -59,7 +59,7 @@
 | `conda env export > environment.yml`| Export your Conda environment:                | `RUN conda env create -f environment.yml`  usage in docker file                     | 
 | `conda deactivate`                  |                                               | ``                                                                                  | 
 | `conda remove --name myenv --all`   |                                               | ``                                                                                  | 
-| ``                                  |                                               | ``                                                                                  | 
+| `conda info --envs`                 |   Verify Conda Environment Path               | ``                                                                                  | 
 
 
 
@@ -102,5 +102,181 @@ docker run -it lunar:v1
 | `-t` | Allocates pseudo-TTY (interactive)   | `docker run -it ubuntu`                   |
 | `-d` | Detached mode (run in background)    | `docker run -d ubuntu`                    |
 | `-p` | Publish container port to host       | `docker run -p 8080:80 nginx`             |
+
+---
+
+
+# 🎧 FitBeat: LLM-Powered Music Recommendation Agent
+
+**Author:** Sergey Gendel
+
+---
+
+## 🚀 Project Overview
+
+**FitBeat** is an LLM-powered Music Recommendation Agent transforming emotional or situational descriptions (e.g., "music for intense gym training" or "playlist for a child's birthday party") into personalized playlists.
+
+## 🛠️ Technology Stack
+
+FitBeat leverages a modern, powerful tech stack, explicitly designed to demonstrate cutting-edge ML, LLM, and MLOps capabilities:
+
+* **Languages & Libraries:** Python, FastAPI, PyTorch, Transformers, Sentence-Transformers, OpenAI API, Genius API
+* **Machine Learning Techniques:** Retrieval-Augmented Generation (RAG), Embedding-based Semantic Ranking
+* **Cloud Infrastructure:** AWS Lambda, AWS API Gateway, AWS S3, AWS Secrets Manager, AWS CloudWatch
+* **Deployment Tools:** AWS Serverless Application Model (SAM), Docker, GitHub Actions (CI/CD)
+* **Testing & Quality:** Pytest, Flake8, Black, Isort
+
+---
+
+## 📌 How It Works (Quick Overview)
+
+### 1. Initial Filtering (Numeric Analysis)
+
+* Converts prompts into numeric audio features (tempo, energy, etc.).
+* Filters from a large Kaggle [Spotify Tracks Dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset).
+
+### 2. Hybrid Semantic Ranking (Embeddings & RAG)
+
+* Retrieves track lyrics and descriptions from [Genius](https://genius.com/).
+* Ranks tracks by semantic similarity using embeddings and RAG-based refinement.
+
+### 3. Final Recommendation & Output
+
+* Provides structured recommendation table (Artist, Track Name, YouTube link).
+* Optionally downloads and converts tracks to MP3 if configured (`FRONTEND_MODE=False`).
+
+---
+
+## 🚀 Agent's Internal Workflow
+
+FitBeat operates via a structured LLM-driven pipeline:
+
+### 1. Memory Initialization (Optional)
+
+### 2. Action Plan Creation
+
+### 3. Action Plan Structuring (JSON)
+
+### 4. Execute Actions (via dedicated agent tools)
+
+---
+
+## ⚙️ Agent Tools
+
+* Numeric Filtering
+* Hybrid Semantic Ranking (Embeddings & RAG)
+* Recommendation Table Creation
+* Track Retrieval & Conversion (optional)
+* Playlist Summarization
+
+---
+
+## 🧠 Agent Memory (Persistent Context Management)
+
+FitBeat maintains context across interactions, summarizing prompts and storing summaries (`conversation_memory.json`).
+
+---
+
+## 🧪 Testing and CI/CD
+
+* **Unit & E2E Testing**: Using Pytest and GitHub Actions
+* **Code Quality**: Flake8, Black, Isort
+
+---
+
+## 📦 Deployment and Usage (Single-Lambda AWS Deployment)
+
+### ✅ Deployment Overview
+
+FitBeat is deployed explicitly using AWS SAM, packaged as a Docker container hosted on AWS Lambda, accessible via AWS API Gateway.
+
+**Live API endpoints:**
+
+* **Status Check (`GET`):**
+
+  ```
+  https://cnrf43xfm8.execute-api.us-east-1.amazonaws.com/Prod/status
+  ```
+* **Music Recommendation (`POST`):**
+
+  ```
+  https://cnrf43xfm8.execute-api.us-east-1.amazonaws.com/Prod/recommend
+  ```
+
+### ✅ Testing the Deployed API
+
+**Using Curl:**
+
+Status endpoint:
+
+```bash
+curl https://cnrf43xfm8.execute-api.us-east-1.amazonaws.com/Prod/status
+```
+
+Recommend endpoint:
+
+```bash
+curl -X POST https://cnrf43xfm8.execute-api.us-east-1.amazonaws.com/Prod/recommend \
+     -H "Content-Type: application/json" \
+     -d '{"description": "upbeat music for intense gym training", "clear_memory": true}'
+```
+
+**Using Postman:**
+
+1. Open Postman and create a new HTTP Request.
+2. Set method to `POST` and URL to:
+
+   ```
+   https://cnrf43xfm8.execute-api.us-east-1.amazonaws.com/Prod/recommend
+   ```
+3. In "Headers", add:
+
+   ```
+   Key: Content-Type
+   Value: application/json
+   ```
+4. Under "Body", select "raw" and "JSON", and paste:
+
+   ```json
+   {
+     "description": "upbeat music for intense gym training",
+     "clear_memory": true
+   }
+   ```
+5. Click "Send" and view your recommended playlist response.
+
+*(Consider adding Postman request/response screenshots for clarity.)*
+
+---
+
+## 🚀 How to Run (Local Development)
+
+### ✅ Clone the Repository
+
+```bash
+git clone https://github.com/your-repo/FitBeat.git
+cd FitBeat
+```
+
+### ✅ Install Requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+### ✅ API Keys Configuration
+
+Copy `.env.example` to `.env` and insert your keys:
+
+```ini
+OPENAI_API_KEY="your-openai-api-key"
+GENIUS_API_KEY="your-genius-api-key"
+```
+
+### ✅ Run Application Locally
+
+```bash
+python -m core.orchestrator
+```
 
 ---
